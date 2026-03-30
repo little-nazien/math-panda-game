@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>🐼 小熊猫数学乐园 🐼</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "微软雅黑", "PingFang SC", sans-serif;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            padding: 35px;
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            border: 4px solid #ff9a8b;
+        }
+        h1 {
+            font-size: 32px;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255, 107, 107, 0.2);
+        }
+        .panda-icon {
+            font-size: 40px;
+            margin: 0 8px;
+        }
+        h3 {
+            font-size: 20px;
+            color: #4ecdc4;
+            margin-bottom: 30px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        .btn-rect {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+        }
+        .btn-square {
+            background: linear-gradient(135deg, #55a630 0%, #82c745 100%);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 3px dashed #ff9a8b;
+        }
+        .success {
+            color: #27ae60;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .fail {
+            color: #e74c3c;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .answer {
+            font-size: 18px;
+            color: #34495e;
+            margin: 8px 0;
+        }
+        .stars {
+            font-size: 22px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>
+            <span class="panda-icon">🐼</span>
+            小熊猫数学乐园
+            <span class="panda-icon">🐼</span>
+        </h1>
+        <h3>✨ 长方形 & 正方形 周长面积计算 ✨</h3>
+        
+        <div class="btn-group">
+            <button class="btn btn-rect" onclick="calc('rect')">📏 长方形</button>
+            <button class="btn btn-square" onclick="calc('square')">📐 正方形</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calc(type) {
+            let P, S;
+            if(type === 'rect') {
+                let len = prompt("请输入长方形的长：");
+                let wid = prompt("请输入长方形的宽：");
+                if(!len || !wid || isNaN(len) || isNaN(wid)) {
+                    alert("请输入有效的数字哦！");
+                    return;
+                }
+                P = 2 * (Number(len) + Number(wid));
+                S = len * wid;
+            } else {
+                let side = prompt("请输入正方形的边长：");
+                if(!side || isNaN(side)) {
+                    alert("请输入有效的数字哦！");
+                    return;
+                }
+                P = 4 * Number(side);
+                S = side * side;
+            }
+
+            let uP = prompt("请输入你计算的周长：");
+            let uS = prompt("请输入你计算的面积：");
+            if(!uP || !uS || isNaN(uP) || isNaN(uS)) {
+                alert("请输入有效的答案哦！");
+                return;
+            }
+
+            let res = document.getElementById("result");
+            let isCorrectP = Math.abs(Number(uP) - P) < 0.001;
+            let isCorrectA = Math.abs(Number(uS) - S) < 0.001;
+
+            if(isCorrectP && isCorrectA) {
+                res.innerHTML = `
+                    <div class="result-box">
+                        <div class="success">🎉 太棒啦！全部正确！</div>
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <p class="answer">正确周长：${P.toFixed(2)}</p >
+                        <p class="answer">正确面积：${S.toFixed(2)}</p >
+                    </div>
+                `;
+            } else {
+                res.innerHTML = `
+                    <div class="result-box">
+                        <div class="fail">❌ 答错啦，别灰心！再试一次吧～</div>
+                        <p class="answer">正确周长：${P.toFixed(2)}</p >
+                        <p class="answer">正确面积：${S.toFixed(2)}</p >
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
